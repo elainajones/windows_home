@@ -1,0 +1,24 @@
+[submodule "vimfiles/pack/default/start/supertab"]
+	path = vimfiles/pack/default/start/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "vimfiles/pack/default/start/lightline"]
+	path = vimfiles/pack/default/start/lightline
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "vimfiles/pack/default/start/gruvbox"]
+	path = vimfiles/pack/default/start/gruvbox
+	url = https://github.com/gruvbox-community/gruvbox.git
+[submodule "vimfiles/pack/default/start/vim-gnupg"]
+	path = vimfiles/pack/default/start/vim-gnupg
+	url = https://github.com/jamessan/vim-gnupg
+[submodule "vimfiles/pack/default/start/nerdtree"]
+	path = vimfiles/pack/default/start/nerdtree
+	url = https://github.com/preservim/nerdtree.git
+[submodule "vimfiles/pack/default/start/vim-fugitive"]
+	path = vimfiles/pack/default/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "vimfiles/pack/default/start/ale"]
+	path = vimfiles/pack/default/start/ale
+	url = https://github.com/dense-analysis/ale.git
+[submodule "vimfiles/pack/default/start/vim-gitgutter"]
+	path = vimfiles/pack/default/start/vim-gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
