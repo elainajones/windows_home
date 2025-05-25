@@ -54,7 +54,7 @@ function main {
 
     $sources = @{
         "git.exe" = "https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/MinGit-2.49.0-64-bit.zip"
-        "vim.exe" = "https://github.com/vim/vim-win32-installer/releases/download/v9.1.0/gvim_9.1.0_x64_signed.zip"
+        "vim.exe" = "https://github.com/vim/vim-win32-installer/releases/download/v9.1.1404/gvim_9.1.1404_x64_signed.zip"
     }
 
     foreach ($execName in $sources.Keys) {
