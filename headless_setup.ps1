@@ -3,15 +3,12 @@ function Download-File {
         [string]$Url,
         [string]$OutputPath = $(Split-Path -Leaf $Url)
     )
-    if (Test-Path -PathType Container $OutputPath) {
+    if (Test-Path -PathType Leaf $OutputPath) {
         $Path = "${Path}\$(Split-Path -Leaf $Url)"
     } else {
         # Make sure parent path exists.
         New-Item -ItemType Directory -Path $(Split-Path -Parent $OutputPath) -Force > $null
-    }
-
-    Write-Host "Downloading $(Split-Path -Leaf $Url)"
-
+    } Write-Host "Downloading $(Split-Path -Leaf $Url)"
     $ProgressPreference = 'SilentlyContinue'
     Invoke-WebRequest -Uri $Url -OutFile $OutputPath
 
@@ -34,13 +31,12 @@ function Find-Path {
     return Get-ChildItem -Path $Path -Recurse -ErrorAction SilentlyContinue -Include $Pattern
 }
 
-# For reference
-# function New-TemporaryDirectory {
-#     # Not $env:TEMP, see https://stackoverflow.com/a/946017
-#     $tmp = [System.IO.Path]::GetTempPath()
-#     $name = (New-Guid).ToString("N")
-#     New-Item -ItemType Directory -Path (Join-Path $tmp $name)
-# }
+function New-TemporaryDirectory {
+    # Not $env:TEMP, see https://stackoverflow.com/a/946017
+    $tmp = [System.IO.Path]::GetTempPath()
+    $name = (New-Guid).ToString("N")
+    New-Item -ItemType Directory -Path (Join-Path $tmp $name)
+}
 
 function main {
     $savePath = "C:\opt"
@@ -96,6 +92,36 @@ function main {
         }
     }
     Write-Host "Finished installing packages"
-}
 
+    $tempDir = New-TemporaryDirectory
+    $url = "https://www.github.com/elainajones/windows_home.git"
+
+    git clone --recurse-submodules -j4 $url $tempDir
+
+    # We could iterate over the contents of $tempDir to copy everything,
+    # but this is tricky to do without polluting $HOME. Instead, copy
+    # only what we need on a case-by-case basis.
+    #
+    # Copy _vimrc and vimfiles (plugins, etc).
+    Copy-Item -Recurse -Force -Path "${tempDir}\vimfiles" -Destination $HOME
+    Copy-Item -Force -Path "${tempDir}\_vimrc" -Destination $HOME
+    # Copy .gitconfig if not already present.
+    if (-Not (Test-Path -PathType Leaf $HOME\.gitconfig)) {
+        Copy-Item -Force -Path "${tempDir}\.gitconfig" -Destination $HOME
+    }
+    # Copy .git-credentials sample if not already present.
+    if (-Not (Test-Path -PathType Leaf $HOME\.git-credentials)) {
+        Copy-Item -Force -Path "${tempDir}\.git-credentials" -Destination $HOME
+    }
+    # Append to $PROFILE
+    $path = Find-Path -Path $tempDir -Pattern "Microsoft.PowerShell_profile.ps1"
+    if ($path.Length -gt 0) {
+        Get-Content $path[0].Fullname | Add-Content $PROFILE
+    }
+
+    # Cleanup.
+    Remove-Item -Recurse -Force -Path $tempDir > $null
+
+    Write-Host "Finished copying configuration files"
+}
 main
