@@ -30,6 +30,13 @@ function wget {
 
     Write-Host "Saved to $OutputPath"
 }
+function find {
+    param (
+        [string]$Path = $PWD,
+        [string]$Pattern
+    )
+    return Get-ChildItem -Path $Path -Recurse -ErrorAction SilentlyContinue -Include $Pattern
+}
 
 Set-Alias -Name c -Value clear
 Set-Alias -Name e -Value explorer
