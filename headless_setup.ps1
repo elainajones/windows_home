@@ -76,6 +76,9 @@ function main {
                 # only the first one.
                 $execPath = Split-Path -Parent $execPath[0].FullName
 
+                # Append to active PATH variable.
+                $env:Path = "$env:PATH;$execPath"
+
                 # Format line to add executable to path.
                 $newLine = '$env:PATH="$env:PATH;'
                 $newLine += $execPath
