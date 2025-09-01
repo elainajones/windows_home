@@ -3,7 +3,7 @@
 # $env:PATH="$env:PATH;C:\opt\MinGit-2.49.0\cmd\"
 #
 # Remove any pre-existing system alias so we can override it
-# Remove-Item Alias:wget -Force
+Remove-Item Alias:wget -Force
 
 function explorer {
     param (
