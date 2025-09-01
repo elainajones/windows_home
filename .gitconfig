@@ -5,7 +5,7 @@
 [user]
 	email = 133198355+elainajones@users.noreply.github.com 
 	name = Elaina Jones
-	signingkey = 42A1B190F99555C1
+	# signingkey = 42A1B190F99555C1
 [alias]
     lg = log --color --graph --pretty=format:'%C(yellow)%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     co=checkout
@@ -13,6 +13,6 @@
     shove=push -f
     aa=commit --amend --author="Elaina Jones <133198355+elainajones@users.noreply.github.com>"
 [commit]
-	gpgsign = true
+	gpgsign = false
 [init]
 	defaultBranch = main
