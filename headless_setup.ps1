@@ -148,8 +148,8 @@ function main {
     }
 
     # Change the default SSH shell from CMD to PowerShell.
-    $path = Get-Command powershell | Format-Table -Property Source -HideTableHeaders
-    New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$path" -PropertyType String -Force
+    $path = Get-Command powershell
+    New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value $path.Source -PropertyType String -Force
 
     # Remove the stupid app execution alias for Python so it uses our
     # installation instead of trying to open the Microsoft Store.
