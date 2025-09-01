@@ -120,9 +120,21 @@ function main {
         Get-Content $path[0].Fullname | Add-Content $PROFILE
     }
 
-    # Cleanup.
+    # Change the default SSH shell from CMD to PowerShell.
+    $path = Get-Command powershell | Format-Table -Property Source -HideTableHeaders
+    New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$path" -PropertyType String -Force
+
+    # Remove the stupid app execution alias for Python so it uses our
+    # installation instead of trying to open the Microsoft Store.
+    Remove-Item $env:USERPROFILE\AppData\Local\Microsoft\WindowsApps\python*.exe
+
+    # Download installers to simplify setup.
+    Download-File "https://www.python.org/ftp/python/3.13.7/python-3.13.7-amd64.exe" ~/Downloads
+
+    # Cleanup temp files.
     Remove-Item -Recurse -Force -Path $tempDir > $null
 
     Write-Host "Finished copying configuration files"
+
 }
 main
