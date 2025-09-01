@@ -16,7 +16,7 @@ function wget {
         [string]$Url,
         [string]$OutputPath = $(Split-Path -Leaf $Url)
     )
-    if (Test-Path -PathType Container $OutputPath) {
+    if (Test-Path -PathType Leaf $OutputPath) {
         $Path = "${Path}\$(Split-Path -Leaf $Url)"
     } else {
         # Make sure parent path exists.
